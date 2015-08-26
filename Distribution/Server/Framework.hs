@@ -6,6 +6,7 @@ module Distribution.Server.Framework (
     module Happstack.Server.Response,
     module Happstack.Server.RqData,
     module Happstack.Server.FileServe,
+    serveDirectory',
     module Happstack.Server.Error,
     module Happstack.Server.Monads,
     module Happstack.Server.Types,
@@ -39,6 +40,7 @@ import Happstack.Server.Routing
 import Happstack.Server.Response
 import Happstack.Server.RqData
 import Happstack.Server.FileServe
+import Happstack.Server.FileServe.BuildingBlocks (serveDirectory')
 import Happstack.Server.Error
 import Happstack.Server.Monads
 import Happstack.Server.Types

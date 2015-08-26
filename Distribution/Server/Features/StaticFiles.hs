@@ -12,6 +12,12 @@ import Data.List hiding (find)
 import System.FilePath
 import System.Directory (getDirectoryContents)
 
+import qualified Data.Map as Map
+
+-- | Our custom MIME map.
+customMimeTypes :: MimeMap
+customMimeTypes = Map.insert "cabal" "text/x-cabal" mimeTypes
+
 -- | A feature to provide the top level files on the site (using templates)
 -- and also serve the genuinely static files.
 --
@@ -77,7 +83,7 @@ staticFilesFeature ServerEnv{serverStaticDir, serverTemplatesMode}
     serveStaticDirFiles :: ServerPartE Response
     serveStaticDirFiles = do
       cacheControlWithoutETag staticResourceCacheControls
-      serveDirectory DisableBrowsing [] serverStaticDir
+      serveDirectory' DisableBrowsing [] (guessContentTypeM customMimeTypes) serverStaticDir
 
     serveStaticToplevelFile :: String -> FilePath -> ServerPartE Response
     serveStaticToplevelFile mimetype filename = do
